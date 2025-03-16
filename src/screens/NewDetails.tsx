@@ -24,7 +24,7 @@ const NewsDetails = () => {
 
   const handleDislike = async () => {
     if (!news) return;
-    const updatedNews = { ...news, likes: news.likes + 1 };
+    const updatedNews = { ...news, dislikes: news.dislikes + 1 };
     setNews(updatedNews);
     await axios.patch(`http://localhost:5000/api/news/${id}/dislike`);
   };

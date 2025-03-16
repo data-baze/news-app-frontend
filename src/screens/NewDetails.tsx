@@ -4,22 +4,22 @@ import axios from "axios";
 import { News } from "../types/types";
 
 const NewsDetails = () => {
-  const { _id } = useParams();
+  const { id } = useParams();
   const [news, setNews] = useState<News | null>(null);
 
   useEffect(() => {
     const fetchNews = async () => {
-      const response = await axios.get(`http://localhost:5000/api/news/${_id}`);
+      const response = await axios.get(`http://localhost:5000/api/news/${id}`);
       setNews(response.data);
     };
     fetchNews();
-  }, [_id]);
+  }, [id]);
 
   const handleLike = async () => {
     if (!news) return;
     const updatedNews = { ...news, likes: news.likes + 1 };
     setNews(updatedNews);
-    await axios.post(`http://localhost:5000/api/news/${_id}/like`);
+    await axios.post(`http://localhost:5000/api/news/${id}/like`);
   };
 
   return (

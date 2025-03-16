@@ -8,7 +8,6 @@ const Navbar = () => {
           News App
         </Link>
         <div className="space-x-4">
-          <Link to="/stats">Stats</Link>
           <Link to="/admin">Admin</Link>
         </div>
       </div>

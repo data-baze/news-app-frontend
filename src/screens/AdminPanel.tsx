@@ -17,7 +17,7 @@ const AdminPanel = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4 max-w-2xl">
       <h1 className="text-xl font-bold mb-4">Admin Panel</h1>
       <form onSubmit={handleSubmit} className="border p-4">
         <input
@@ -40,7 +40,7 @@ const AdminPanel = () => {
         />
         <button
           type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded"
+          className="bg-blue-500 text-white px-4 py-2 rounded"
         >
           Add News
         </button>

@@ -4,9 +4,9 @@ import Footer from "./Footer";
 
 const Layout = () => {
   return (
-    <div className="flex flex-col min-h-screen items-center w-full">
+    <div className="flex flex-col min-h-screen justify-center items-center w-full">
       <Navbar />
-      <main className=" p-4">
+      <main className=" p-4 max-w-lg">
         <Outlet /> {/* Renders the child route */}
       </main>
       <Footer />

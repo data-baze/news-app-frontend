@@ -3,8 +3,6 @@ import Layout from "./components/Layout";
 import NewsScreen from "./screens/NewScreen";
 import NewsDetails from "./screens/NewDetails";
 import AdminPanel from "./screens/AdminPanel";
-import NewsByTag from "./screens/NewsByTag";
-import Stats from "./screens/Stats";
 
 function App() {
   return (
@@ -14,8 +12,6 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<NewsScreen />} />
           <Route path="/news/:id" element={<NewsDetails />} />
-          <Route path="/tag/:tag" element={<NewsByTag />} />
-          <Route path="/stats" element={<Stats />} />
         </Route>
 
         {/* Admin panel can have its own layout if needed */}

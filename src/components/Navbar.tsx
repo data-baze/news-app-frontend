@@ -1,6 +1,8 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const location = useLocation();
+
   return (
     <nav className="bg-gray-900 text-white p-4 w-full">
       <div className="w-full flex flex-row justify-between gap-10">
@@ -8,7 +10,11 @@ const Navbar = () => {
           News App
         </Link>
         <div className="space-x-4">
-          <Link to="/admin">Admin</Link>
+          {location.pathname === "/admin" ? (
+            <Link to="/add-post">Add Post</Link>
+          ) : (
+            <Link to="/admin">Admin</Link>
+          )}
         </div>
       </div>
     </nav>

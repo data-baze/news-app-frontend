@@ -19,21 +19,34 @@ const NewsDetails = () => {
     if (!news) return;
     const updatedNews = { ...news, likes: news.likes + 1 };
     setNews(updatedNews);
-    await axios.post(`http://localhost:5000/api/news/${id}/like`);
+    await axios.patch(`http://localhost:5000/api/news/${id}/like`);
   };
 
   return (
     <div className="container mx-auto p-4">
       {news && (
-        <div>
+        <div className="space-y-4">
           <h1 className="text-xl font-bold">{news.title}</h1>
           <p>{news.text}</p>
-          <button
-            onClick={handleLike}
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-          >
-            👍 Like ({news.likes})
-          </button>
+
+          <div className="flex justify-between">
+            <button
+              onClick={handleLike}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              👍 Like ({news.likes})
+            </button>
+            <button
+              onClick={handleLike}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              👍 Dislike ({news.dislikes})
+            </button>
+          </div>
+          <div className="flex justify-between italic font-light text-sm">
+            <p>Date Posted-{news.createdAt}</p>
+            <p>Views - {news.views}</p>
+          </div>
         </div>
       )}
     </div>

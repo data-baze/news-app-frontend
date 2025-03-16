@@ -6,7 +6,7 @@ const Layout = () => {
   return (
     <div className="flex flex-col min-h-screen justify-center items-center w-full">
       <Navbar />
-      <main className=" p-4 max-w-lg">
+      <main className=" p-4 max-w-4xl">
         <Outlet /> {/* Renders the child route */}
       </main>
       <Footer />

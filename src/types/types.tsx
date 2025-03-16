@@ -5,6 +5,7 @@ export interface News {
   images: string[];
   tags: string[];
   likes: number;
+  dislikes: number;
   views: number;
   createdAt: string;
 }

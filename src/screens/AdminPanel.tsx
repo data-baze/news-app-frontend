@@ -1,50 +1,81 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
-const AdminPanel = () => {
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
-  const [tags, setTags] = useState("");
+interface NewsPost {
+  _id: string;
+  title: string;
+  text: string;
+  tags: string[];
+}
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await axios.post("http://localhost:5000/api/news", {
-      title,
-      text,
-      tags: tags.split(","),
-    });
-    alert("News added!");
+const AdminPanel = () => {
+  const [news, setNews] = useState<NewsPost[]>([]);
+
+  useEffect(() => {
+    fetchNews();
+  }, []);
+
+  const fetchNews = async () => {
+    try {
+      const response = await axios.get("http://localhost:5000/api/news");
+      setNews(response.data);
+    } catch (error) {
+      console.error("Error fetching news:", error);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!window.confirm("Are you sure you want to delete this post?")) return;
+    try {
+      await axios.delete(`http://localhost:5000/api/news/${id}`);
+      setNews(news.filter((post) => post._id !== id));
+    } catch (error) {
+      console.error("Error deleting news:", error);
+    }
   };
 
   return (
-    <div className="container mx-auto p-4 max-w-2xl">
-      <h1 className="text-xl font-bold mb-4">Admin Panel</h1>
-      <form onSubmit={handleSubmit} className="border p-4">
-        <input
-          className="border p-2 w-full mb-2"
-          placeholder="Title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          className="border p-2 w-full mb-2"
-          placeholder="Text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-        />
-        <input
-          className="border p-2 w-full mb-2"
-          placeholder="Tags (comma-separated)"
-          value={tags}
-          onChange={(e) => setTags(e.target.value)}
-        />
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 rounded"
-        >
-          Add News
-        </button>
-      </form>
+    <div className="w-full mx-auto p-4">
+      <h1 className="text-xl font-bold mb-4">Admin Panel Manage news/Posts </h1>
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead>
+            <tr className="bg-gray-200">
+              <th className="p-3 border">Title</th>
+              <th className="p-3 border">Text</th>
+              <th className="p-3 border">Tags</th>
+              <th className="p-3 border">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {news.length > 0 ? (
+              news.map((post) => (
+                <tr key={post._id} className="border">
+                  <td className="p-3 border">{post.title}</td>
+                  <td className="p-3 border">
+                    {post.text.substring(0, 50)}...
+                  </td>
+                  <td className="p-3 border">{post.tags.join(", ")}</td>
+                  <td className="p-3 border text-center">
+                    <button
+                      onClick={() => handleDelete(post._id)}
+                      className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-700"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={4} className="text-center p-4">
+                  No news found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

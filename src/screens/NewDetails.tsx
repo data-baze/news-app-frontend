@@ -22,6 +22,13 @@ const NewsDetails = () => {
     await axios.patch(`http://localhost:5000/api/news/${id}/like`);
   };
 
+  const handleDislike = async () => {
+    if (!news) return;
+    const updatedNews = { ...news, likes: news.likes + 1 };
+    setNews(updatedNews);
+    await axios.patch(`http://localhost:5000/api/news/${id}/dislike`);
+  };
+
   return (
     <div className="container mx-auto p-4">
       {news && (
@@ -37,7 +44,7 @@ const NewsDetails = () => {
               👍 Like ({news.likes})
             </button>
             <button
-              onClick={handleLike}
+              onClick={handleDislike}
               className="bg-blue-500 text-white px-4 py-2 rounded"
             >
               👍 Dislike ({news.dislikes})
